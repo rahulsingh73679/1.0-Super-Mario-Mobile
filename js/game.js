@@ -43,38 +43,106 @@ if (isMobile) {
       // Add canvas to container
       gameContainer.insertBefore(canvas, gameContainer.firstChild);
       
-      // Set canvas styles for full screen coverage
-      canvas.style.position = 'absolute';
-      canvas.style.top = '0';
-      canvas.style.left = '0';
-      canvas.style.width = '100vw';
-      canvas.style.height = 'calc(100vh - 85px)';
-      canvas.style.objectFit = 'cover';
-      canvas.style.objectPosition = 'center center';
-      canvas.style.margin = '0';
-      canvas.style.padding = '0';
+      // Set basic canvas styles
+      canvas.style.display = 'block';
+      canvas.style.margin = '0 auto';
+      canvas.style.maxWidth = '100%';
+      canvas.style.maxHeight = 'calc(100vh - 100px)';
+      canvas.style.height = 'auto';
+      canvas.style.width = 'auto';
+      canvas.style.objectFit = 'contain';
       
-      // Handle high-resolution screens
-      if (window.innerWidth >= 1920) {
-        canvas.style.transform = 'scale(1.05)';
-        canvas.style.transformOrigin = 'center top';
+      // Add screen adjustment controls
+      var screenAdjust = document.createElement('div');
+      screenAdjust.className = 'screen-adjust';
+      
+      var zoomInBtn = document.createElement('button');
+      zoomInBtn.className = 'screen-adjust-btn';
+      zoomInBtn.textContent = '+';
+      zoomInBtn.setAttribute('aria-label', 'Zoom In');
+      
+      var zoomOutBtn = document.createElement('button');
+      zoomOutBtn.className = 'screen-adjust-btn';
+      zoomOutBtn.textContent = '-';
+      zoomOutBtn.setAttribute('aria-label', 'Zoom Out');
+      
+      var resetBtn = document.createElement('button');
+      resetBtn.className = 'screen-adjust-btn';
+      resetBtn.textContent = '↺';
+      resetBtn.setAttribute('aria-label', 'Reset Zoom');
+      
+      screenAdjust.appendChild(zoomInBtn);
+      screenAdjust.appendChild(resetBtn);
+      screenAdjust.appendChild(zoomOutBtn);
+      gameContainer.appendChild(screenAdjust);
+      
+      // Current zoom level
+      var currentZoom = 1;
+      var minZoom = 0.6;
+      var maxZoom = 1.5;
+      var zoomStep = 0.1;
+      
+      // Apply zoom function
+      function applyZoom(zoom) {
+        currentZoom = zoom;
+        canvas.style.transform = 'scale(' + zoom + ')';
+        canvas.style.transformOrigin = 'center center';
+        
+        // Save user preference
+        try {
+          localStorage.setItem('marioCanvasZoom', zoom);
+        } catch (e) {
+          console.log('Could not save zoom preference');
+        }
       }
+      
+      // Load saved zoom preference
+      try {
+        var savedZoom = localStorage.getItem('marioCanvasZoom');
+        if (savedZoom) {
+          currentZoom = parseFloat(savedZoom);
+          applyZoom(currentZoom);
+        }
+      } catch (e) {
+        console.log('Could not load zoom preference');
+      }
+      
+      // Add event listeners for zoom controls
+      zoomInBtn.addEventListener('click', function() {
+        if (currentZoom < maxZoom) {
+          applyZoom(Math.min(maxZoom, currentZoom + zoomStep));
+        }
+      });
+      
+      zoomOutBtn.addEventListener('click', function() {
+        if (currentZoom > minZoom) {
+          applyZoom(Math.max(minZoom, currentZoom - zoomStep));
+        }
+      });
+      
+      resetBtn.addEventListener('click', function() {
+        applyZoom(1);
+      });
       
       // Set up resize handler
       function resizeCanvas() {
         var windowWidth = window.innerWidth;
         var windowHeight = window.innerHeight;
-        var controlsHeight = windowHeight > 500 ? 85 : 65; // Smaller controls on small screens
+        var controlsHeight = windowHeight > 500 ? 100 : 70;
         
-        // Set height based on available space
-        canvas.style.height = (windowHeight - controlsHeight) + 'px';
+        // Calculate dimensions maintaining aspect ratio
+        var aspectRatio = canvas.width / canvas.height;
+        var availableHeight = windowHeight - controlsHeight;
+        var availableWidth = windowWidth * 0.9; // Use 90% of screen width
         
-        // Handle high-resolution screens
-        if (windowWidth >= 1920) {
-          canvas.style.transform = 'scale(1.05)';
-          canvas.style.transformOrigin = 'center top';
+        if (windowWidth / availableHeight > aspectRatio) {
+          // Height is the limiting factor
+          canvas.style.height = availableHeight + 'px';
+          canvas.style.width = 'auto';
         } else {
-          canvas.style.transform = 'none';
+          // Width is the limiting factor
+          canvas.style.width = availableWidth + 'px';
+          canvas.style.height = 'auto';
         }
       }
       
@@ -86,7 +154,7 @@ if (isMobile) {
         setTimeout(resizeCanvas, 100);
       });
       
-      console.log("Canvas positioned for full screen coverage");
+      console.log("Canvas positioned with self-adjustable controls");
     } else {
       // If container not found yet, try again in a moment
       setTimeout(addCanvasToContainer, 100);

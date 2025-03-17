@@ -69,6 +69,33 @@
   background-color: rgba(255, 0, 0, 0.5);
 }
 
+/* Screen adjustment controls */
+.screen-adjust {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1500;
+  display: flex;
+  gap: 10px;
+}
+
+.screen-adjust-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* Hide any keyboard elements from script21.js */
 .keyboard, 
 .keyboard__keys, 
@@ -143,17 +170,16 @@
     pointer-events: none !important;
   }
   
-  /* Adjust canvas for mobile - Full screen approach */
+  /* Adjust canvas for mobile - Balanced approach */
   canvas {
-    width: 100vw !important; /* Use viewport width */
-    height: calc(100vh - 90px) !important; /* Full height minus space for controls */
-    object-fit: cover !important; /* Cover instead of contain to fill more space */
-    margin: 0 !important;
-    padding: 0 !important;
+    width: auto !important; /* Auto width to maintain aspect ratio */
+    height: auto !important; /* Auto height to maintain aspect ratio */
+    max-width: 100% !important; /* Ensure it doesn't overflow */
+    max-height: calc(100vh - 100px) !important; /* Leave space for controls */
+    object-fit: contain !important; /* Maintain aspect ratio */
+    margin: 0 auto !important;
     display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
   }
 }
 
@@ -199,25 +225,24 @@
     flex-direction: row;
   }
   
-  /* Ensure canvas fills the screen in landscape - especially for wide screens like 2400x1080 */
+  /* Balanced canvas sizing for landscape */
   canvas {
-    width: 100vw !important; /* Use viewport width */
-    height: calc(100vh - 85px) !important; /* Full height minus space for controls */
-    object-fit: cover !important; /* Cover instead of contain to fill more space */
-    object-position: center center !important; /* Center the content */
-    max-height: none !important; /* Remove max-height constraint */
-    max-width: none !important; /* Remove max-width constraint */
-    margin: 0 !important;
-    padding: 0 !important;
+    max-width: 90% !important;
+    max-height: calc(100vh - 90px) !important;
+    margin: 0 auto !important;
+    display: block;
   }
-}
-
-/* High resolution screens (like 2400x1080) */
-@media (min-width: 1920px) and (orientation: landscape) {
-  canvas {
-    /* Special handling for high-res screens to ensure proper scaling */
-    transform: scale(1.05); /* Slightly scale up to fill more space */
-    transform-origin: center top;
+  
+  /* Make screen adjustment controls smaller in landscape */
+  .screen-adjust {
+    top: 5px;
+    right: 5px;
+  }
+  
+  .screen-adjust-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
   }
 }
 
@@ -235,7 +260,7 @@
   
   /* Adjust canvas for small screens */
   canvas {
-    height: calc(100vh - 65px) !important; /* Less space for controls on small screens */
+    max-height: calc(100vh - 70px) !important;
   }
 }
 
@@ -249,4 +274,19 @@ html, body {
   background-color: #000;
   margin: 0;
   padding: 0;
+}
+
+/* Canvas size classes for user adjustment */
+.canvas-size-normal {
+  transform: scale(1) !important;
+}
+
+.canvas-size-large {
+  transform: scale(1.2) !important;
+  transform-origin: center center !important;
+}
+
+.canvas-size-small {
+  transform: scale(0.8) !important;
+  transform-origin: center center !important;
 } 
