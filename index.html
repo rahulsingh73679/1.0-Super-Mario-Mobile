@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!-- The actual resolution of the NES is 256x240.
+         Ideally, we draw in this size and scale appropriately.-->
+    <title>Super Mario Bros</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/game.css">
+    <link rel="stylesheet" href="style21.css">
+    <link rel="stylesheet" href="css/mobile-controls.css">
+    
+    <!-- Conditionally load script21.js only on non-mobile devices -->
+    <script type="text/javascript">
+      if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        document.write('<script type="text/javascript" src="script21.js"><\/script>');
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Orientation message for portrait mode -->
+    <div class="orientation-message">
+      <div>
+        <h2>Please rotate your device</h2>
+        <p>This game works best in landscape mode</p>
+        <div>
+          <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20ZM4 6H20V18H4V6Z" fill="white"/>
+            <path d="M9.41 16.59L12 14L14.59 16.59L16 15.18L13.41 12.59L16 10L14.59 8.59L12 11.18L9.41 8.59L8 10L10.59 12.59L8 15.18L9.41 16.59Z" fill="white"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Game container -->
+    <div class="game-container">
+      <script type="text/javascript" src="js/util.js"></script>
+      <script type="text/javascript" src="js/input.js"></script>
+      <script type="text/javascript" src="js/resources.js"></script>
+      <script type="text/javascript" src="js/sprite.js"></script>
+      <script type="text/javascript" src="js/entity.js"></script>
+      <script type="text/javascript" src="js/pipe.js"></script>
+      <script type="text/javascript" src="js/mushroom.js"></script>
+      <script type="text/javascript" src="js/fireflower.js"></script>
+      <script type="text/javascript" src="js/star.js"></script>
+      <script type="text/javascript" src="js/fireball.js"></script>
+      <script type="text/javascript" src="js/coin.js"></script>
+      <script type="text/javascript" src="js/bcoin.js"></script>
+      <script type="text/javascript" src="js/goomba.js"></script>
+      <script type="text/javascript" src="js/koopa.js"></script>
+      <script type="text/javascript" src="js/floor.js"></script>
+      <script type="text/javascript" src="js/block.js"></script>
+      <script type="text/javascript" src="js/rubble.js"></script>
+      <script type="text/javascript" src="js/prop.js"></script>
+      <script type="text/javascript" src="js/player.js"></script>
+      <script type="text/javascript" src="js/flag.js"></script>
+      <script type="text/javascript" src="js/levels/level.js"></script>
+      <script type="text/javascript" src="js/levels/11.js"></script>
+      <script type="text/javascript" src="js/levels/11tunnel.js"></script>
+      <script type="text/javascript" src="js/game.js"></script>
+      <script type="text/javascript" src="js/mobile-controls.js"></script>
+      <div class="info">
+        <p class="controls">Move: Arrow Keys, Jump: x, Run: Z</p>
+        <div class="links">My Links <br><a href=""></a> <a href="">LinkedIn</a> <a href="">github</a></div>
+      </div>
+      
+      <!-- Mobile controls container -->
+      <div id="mobile-controls" class="mobile-controls">
+        <div class="d-pad">
+          <button id="btn-left" class="control-btn d-pad-left">◀</button>
+          <button id="btn-right" class="control-btn d-pad-right">▶</button>
+        </div>
+        <div class="action-buttons">
+          <button id="btn-jump" class="control-btn action-btn">Jump</button>
+          <button id="btn-run" class="control-btn action-btn">Run</button>
+          <button id="btn-shoot" class="control-btn action-btn">Fire</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

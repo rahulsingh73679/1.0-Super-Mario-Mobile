@@ -1,0 +1,37 @@
+html, body, ul, li {
+    margin: 0;
+    border: 0;
+    padding: 0;
+  }
+  
+  @media screen and (max-width: 480px) and (orientation: landscape) {
+    /* Add your CSS styles here */
+  }
+  
+  canvas {
+    display: block;
+    width: auto;
+    margin: 0 auto;
+    background-color: blue;
+  }
+  
+  p {
+    text-align: center;
+  }
+  
+  body {
+    overflow: hidden;
+    height: 380;
+  }
+  
+  html {
+    overflow: hidden;
+    height: auto;
+  }
+  
+  .info {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
