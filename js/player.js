@@ -449,4 +449,25 @@
 		this.waiting = 1;
 		this.exiting = true;
 	}
+
+	Player.prototype.breakBlock = function(block) {
+		// Original functionality
+		block.bump();
+		
+		// Add points for breaking a block
+		if (typeof addPoints === 'function' && typeof gameScore !== 'undefined') {
+			addPoints(gameScore.values.breakBlock);
+		}
+	};
+
+	Player.prototype.reachFlag = function() {
+		// Add points for reaching the flag
+		if (typeof addPoints === 'function' && typeof gameScore !== 'undefined') {
+			// Calculate flag points based on height (higher = more points)
+			// This is just an approximation of the original game's scoring
+			var heightFactor = Math.max(0, 1 - (this.pos[1] / 200)); // 0 to 1 based on height
+			var flagPoints = Math.floor(gameScore.values.flag * heightFactor);
+			addPoints(flagPoints);
+		}
+	};
 })();

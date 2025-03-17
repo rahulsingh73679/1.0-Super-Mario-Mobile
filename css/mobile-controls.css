@@ -170,16 +170,19 @@
     pointer-events: none !important;
   }
   
-  /* Adjust canvas for mobile - Balanced approach */
+  /* Adjust canvas for mobile - Extended view approach */
   canvas {
-    width: auto !important; /* Auto width to maintain aspect ratio */
-    height: auto !important; /* Auto height to maintain aspect ratio */
+    width: 100% !important; /* Fill width */
+    height: auto !important; /* Maintain aspect ratio */
     max-width: 100% !important; /* Ensure it doesn't overflow */
     max-height: calc(100vh - 100px) !important; /* Leave space for controls */
     object-fit: contain !important; /* Maintain aspect ratio */
     margin: 0 auto !important;
     display: block;
     position: relative;
+    image-rendering: pixelated; /* Keep pixel art crisp */
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
   }
 }
 
@@ -225,9 +228,9 @@
     flex-direction: row;
   }
   
-  /* Balanced canvas sizing for landscape */
+  /* Extended canvas sizing for landscape */
   canvas {
-    max-width: 90% !important;
+    max-width: 100% !important;
     max-height: calc(100vh - 90px) !important;
     margin: 0 auto !important;
     display: block;
@@ -289,4 +292,58 @@ html, body {
 .canvas-size-small {
   transform: scale(0.8) !important;
   transform-origin: center center !important;
+}
+
+/* Score display */
+.score-display {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1500;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 16px;
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  text-shadow: 2px 2px 0 #000;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.score-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.score-icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.coin-icon {
+  background-image: url('../sprites/items.png');
+  background-position: -5px -97px;
+}
+
+/* Responsive adjustments for score display */
+@media (max-width: 1024px) and (orientation: landscape) {
+  .score-display {
+    top: 5px;
+    left: 5px;
+    font-size: 14px;
+    padding: 5px 8px;
+  }
+  
+  .score-icon {
+    width: 16px;
+    height: 16px;
+  }
 } 

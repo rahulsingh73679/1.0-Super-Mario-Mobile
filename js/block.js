@@ -27,6 +27,11 @@
     (new Mario.Rubble()).spawn(this.pos);
     var x = this.pos[0] / 16, y = this.pos[1] / 16;
     delete level.blocks[y][x];
+    
+    // Award points for breaking a block
+    if (player && typeof player.breakBlock === 'function') {
+      player.breakBlock(this);
+    }
   }
 
   Block.prototype.bonk = function(power) {

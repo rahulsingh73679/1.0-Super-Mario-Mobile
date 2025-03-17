@@ -38,6 +38,11 @@
       this.hit = true;
       player.flag();
       this.vel = [0, 2];
+      
+      // Award points for reaching the flag
+      if (typeof player.reachFlag === 'function') {
+        player.reachFlag();
+      }
     }
   }
 
